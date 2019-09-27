@@ -46,29 +46,51 @@
 
 	'use strict';
 
-	var React = __webpack_require__(1);
-	var Router = __webpack_require__(157);
-	var Route = Router.Route;
-	var DefaultRoute = Router.DefaultRoute;
-	var NotFoundRoute = Router.NotFoundRoute;
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var APP = __webpack_require__(196);
-	var Audience = __webpack_require__(250);
-	var Speaker = __webpack_require__(254);
-	var Board = __webpack_require__(258);
-	var Whoops404 = __webpack_require__(314);
+	var _react = __webpack_require__(1);
 
-	var routes = React.createElement(
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(157);
+
+	var _reactRouter2 = _interopRequireDefault(_reactRouter);
+
+	var _componentsAPP = __webpack_require__(196);
+
+	var _componentsAPP2 = _interopRequireDefault(_componentsAPP);
+
+	var _componentsAudience = __webpack_require__(250);
+
+	var _componentsAudience2 = _interopRequireDefault(_componentsAudience);
+
+	var _componentsSpeaker = __webpack_require__(254);
+
+	var _componentsSpeaker2 = _interopRequireDefault(_componentsSpeaker);
+
+	var _componentsBoard = __webpack_require__(258);
+
+	var _componentsBoard2 = _interopRequireDefault(_componentsBoard);
+
+	var _componentsWhoops404 = __webpack_require__(314);
+
+	var _componentsWhoops4042 = _interopRequireDefault(_componentsWhoops404);
+
+	var Route = _reactRouter2['default'].Route;
+	var DefaultRoute = _reactRouter2['default'].DefaultRoute;
+	var NotFoundRoute = _reactRouter2['default'].NotFoundRoute;
+
+	var routes = _react2['default'].createElement(
 		Route,
-		{ handler: APP },
-		React.createElement(DefaultRoute, { handler: Audience }),
-		React.createElement(Route, { name: "speaker", path: "speaker", handler: Speaker }),
-		React.createElement(Route, { name: "board", path: "board", handler: Board }),
-		React.createElement(NotFoundRoute, { handler: Whoops404 })
+		{ handler: _componentsAPP2['default'] },
+		_react2['default'].createElement(DefaultRoute, { handler: _componentsAudience2['default'] }),
+		_react2['default'].createElement(Route, { name: "speaker", path: "speaker", handler: _componentsSpeaker2['default'] }),
+		_react2['default'].createElement(Route, { name: "board", path: "board", handler: _componentsBoard2['default'] }),
+		_react2['default'].createElement(NotFoundRoute, { handler: _componentsWhoops4042['default'] })
 	);
 
-	Router.run(routes, function (Handler) {
-		React.render(React.createElement(Handler, null), document.getElementById('react-container'));
+	_reactRouter2['default'].run(routes, function (Handler) {
+		_react2['default'].render(_react2['default'].createElement(Handler, null), document.getElementById('react-container'));
 	});
 
 /***/ },
@@ -23565,18 +23587,42 @@
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var React = __webpack_require__(1);
-	var Router = __webpack_require__(157);
-	var RouteHandler = Router.RouteHandler;
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	var io = __webpack_require__(197);
-	var Header = __webpack_require__(249);
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-	var APP = React.createClass({
-	    displayName: 'APP',
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	    getInitialState: function getInitialState() {
-	        return {
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(157);
+
+	var _reactRouter2 = _interopRequireDefault(_reactRouter);
+
+	var _socketIoClient = __webpack_require__(197);
+
+	var _socketIoClient2 = _interopRequireDefault(_socketIoClient);
+
+	var _partsHeader = __webpack_require__(249);
+
+	var _partsHeader2 = _interopRequireDefault(_partsHeader);
+
+	var RouteHandler = _reactRouter2['default'].RouteHandler;
+
+	var APP = (function (_React$Component) {
+	    _inherits(APP, _React$Component);
+
+	    function APP() {
+	        _classCallCheck(this, APP);
+
+	        _get(Object.getPrototypeOf(APP.prototype), 'constructor', this).call(this);
+	        this.state = {
 	            status: 'disconnected',
 	            title: '',
 	            member: {},
@@ -23586,88 +23632,92 @@
 	            currentQuestion: false,
 	            results: {}
 	        };
-	    },
-
-	    componentWillMount: function componentWillMount() {
-	        this.socket = io('http://localhost:3000');
-	        this.socket.on('connect', this.connect);
-	        this.socket.on('disconnect', this.disconnect);
-	        this.socket.on('welcome', this.updateState);
-	        this.socket.on('joined', this.joined);
-	        this.socket.on('audience', this.updateAudience);
-	        this.socket.on('start', this.start);
-	        this.socket.on('end', this.updateState);
-	        this.socket.on('ask', this.ask);
-	        this.socket.on('results', this.updateResults);
-	    },
-
-	    emit: function emit(eventName, payload) {
-	        this.socket.emit(eventName, payload);
-	    },
-
-	    connect: function connect() {
-
-	        var member = sessionStorage.member ? JSON.parse(sessionStorage.member) : null;
-
-	        if (member && member.type === 'audience') {
-	            this.emit('join', member);
-	        } else if (member && member.type === 'speaker') {
-	            this.emit('start', { name: member.name, title: sessionStorage.title });
-	        }
-
-	        this.setState({ status: 'connected' });
-	    },
-
-	    disconnect: function disconnect() {
-	        this.setState({
-	            status: 'disconnected',
-	            title: 'disconnected',
-	            speaker: ''
-	        });
-	    },
-
-	    updateState: function updateState(serverState) {
-	        this.setState(serverState);
-	    },
-
-	    joined: function joined(member) {
-	        sessionStorage.member = JSON.stringify(member);
-	        this.setState({ member: member });
-	    },
-
-	    updateAudience: function updateAudience(newAudience) {
-	        this.setState({ audience: newAudience });
-	    },
-
-	    start: function start(presentation) {
-	        if (this.state.member.type === 'speaker') {
-	            sessionStorage.title = presentation.title;
-	        }
-	        this.setState(presentation);
-	    },
-
-	    ask: function ask(question) {
-	        sessionStorage.answer = '';
-	        this.setState({
-	            currentQuestion: question,
-	            results: { a: 0, b: 0, c: 0, d: 0 }
-	        });
-	    },
-
-	    updateResults: function updateResults(data) {
-	        this.setState({ results: data });
-	    },
-
-	    render: function render() {
-	        return React.createElement(
-	            'div',
-	            null,
-	            React.createElement(Header, this.state),
-	            React.createElement(RouteHandler, _extends({ emit: this.emit }, this.state))
-	        );
+	        this.emit = this.emit.bind(this);
 	    }
 
-	});
+	    _createClass(APP, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            var _this = this;
+
+	            this.socket = (0, _socketIoClient2['default'])('http://localhost:3000');
+
+	            this.socket.on('connect', function () {
+
+	                var member = sessionStorage.member ? JSON.parse(sessionStorage.member) : null;
+
+	                if (member && member.type === 'audience') {
+	                    _this.emit('join', member);
+	                } else if (member && member.type === 'speaker') {
+	                    _this.emit('start', { name: member.name, title: sessionStorage.title });
+	                }
+
+	                _this.setState({ status: 'connected' });
+	            });
+
+	            this.socket.on('disconnect', function () {
+	                _this.setState({
+	                    status: 'disconnected',
+	                    title: 'disconnected',
+	                    speaker: ''
+	                });
+	            });
+
+	            this.socket.on('welcome', function (x) {
+	                return _this.setState(x);
+	            });
+
+	            this.socket.on('joined', function (member) {
+	                sessionStorage.member = JSON.stringify(member);
+	                _this.setState({ member: member });
+	            });
+
+	            this.socket.on('audience', function (newAudience) {
+	                _this.setState({ audience: newAudience });
+	            });
+
+	            this.socket.on('start', function (presentation) {
+	                if (_this.state.member.type === 'speaker') {
+	                    sessionStorage.title = presentation.title;
+	                }
+	                _this.setState(presentation);
+	            });
+
+	            this.socket.on('end', function (x) {
+	                return _this.setState(x);
+	            });
+
+	            this.socket.on('ask', function (question) {
+	                sessionStorage.answer = '';
+	                _this.setState({
+	                    currentQuestion: question,
+	                    results: { a: 0, b: 0, c: 0, d: 0 }
+	                });
+	            });
+
+	            this.socket.on('results', function (data) {
+	                _this.setState({ results: data });
+	            });
+	        }
+	    }, {
+	        key: 'emit',
+	        value: function emit(eventName, payload) {
+	            this.socket.emit(eventName, payload);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2['default'].createElement(
+	                'div',
+	                null,
+	                _react2['default'].createElement(_partsHeader2['default'], this.state),
+	                _react2['default'].createElement(RouteHandler, _extends({ emit: this.emit }, this.state))
+	            );
+	        }
+	    }]);
+
+	    return APP;
+	})(_react2['default'].Component);
 
 	module.exports = APP;
 
@@ -30887,50 +30937,70 @@
 /* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
-	var React = __webpack_require__(1);
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	var Header = React.createClass({
-		displayName: 'Header',
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-		propTypes: {
-			title: React.PropTypes.string.isRequired
-		},
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-		getDefaultProps: function getDefaultProps() {
-			return {
-				status: 'disconnected'
-			};
-		},
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-		render: function render() {
-			return React.createElement(
-				'header',
-				{ className: "row" },
-				React.createElement(
-					'div',
-					{ className: "col-xs-10" },
-					React.createElement(
-						'h1',
-						null,
-						this.props.title
-					),
-					React.createElement(
-						'p',
-						null,
-						this.props.speaker
-					)
-				),
-				React.createElement(
-					'div',
-					{ className: "col-xs-2" },
-					React.createElement('span', { id: "connection-status", className: this.props.status })
-				)
-			);
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var Header = (function (_React$Component) {
+		_inherits(Header, _React$Component);
+
+		function Header() {
+			_classCallCheck(this, Header);
+
+			_get(Object.getPrototypeOf(Header.prototype), "constructor", this).apply(this, arguments);
 		}
 
-	});
+		_createClass(Header, [{
+			key: "render",
+			value: function render() {
+				return _react2["default"].createElement(
+					"header",
+					{ className: "row" },
+					_react2["default"].createElement(
+						"div",
+						{ className: "col-xs-10" },
+						_react2["default"].createElement(
+							"h1",
+							null,
+							this.props.title
+						),
+						_react2["default"].createElement(
+							"p",
+							null,
+							this.props.speaker
+						)
+					),
+					_react2["default"].createElement(
+						"div",
+						{ className: "col-xs-2" },
+						_react2["default"].createElement("span", { id: "connection-status", className: this.props.status })
+					)
+				);
+			}
+		}]);
+
+		return Header;
+	})(_react2["default"].Component);
+
+	Header.propTypes = {
+		title: _react2["default"].PropTypes.string.isRequired
+	};
+
+	Header.defaultProps = {
+		status: 'disconnected'
+	};
 
 	module.exports = Header;
 
@@ -31182,42 +31252,77 @@
 
 	'use strict';
 
-	var React = __webpack_require__(1);
-	var Display = __webpack_require__(251);
-	var JoinSpeaker = __webpack_require__(255);
-	var Attendance = __webpack_require__(256);
-	var Questions = __webpack_require__(257);
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	var Speaker = React.createClass({
-		displayName: 'Speaker',
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-		render: function render() {
-			return React.createElement(
-				'div',
-				null,
-				React.createElement(
-					Display,
-					{ 'if': this.props.status === 'connected' },
-					React.createElement(
-						Display,
-						{ 'if': this.props.member.name && this.props.member.type === 'speaker' },
-						React.createElement(Questions, { questions: this.props.questions, emit: this.props.emit }),
-						React.createElement(Attendance, { audience: this.props.audience })
-					),
-					React.createElement(
-						Display,
-						{ 'if': !this.props.member.name },
-						React.createElement(
-							'h2',
-							null,
-							'Start the presentation'
-						),
-						React.createElement(JoinSpeaker, { emit: this.props.emit })
-					)
-				)
-			);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _partsDisplay = __webpack_require__(251);
+
+	var _partsDisplay2 = _interopRequireDefault(_partsDisplay);
+
+	var _partsJoinSpeaker = __webpack_require__(255);
+
+	var _partsJoinSpeaker2 = _interopRequireDefault(_partsJoinSpeaker);
+
+	var _partsAttendance = __webpack_require__(256);
+
+	var _partsAttendance2 = _interopRequireDefault(_partsAttendance);
+
+	var _partsQuestions = __webpack_require__(257);
+
+	var _partsQuestions2 = _interopRequireDefault(_partsQuestions);
+
+	var Speaker = (function (_React$Component) {
+		_inherits(Speaker, _React$Component);
+
+		function Speaker() {
+			_classCallCheck(this, Speaker);
+
+			_get(Object.getPrototypeOf(Speaker.prototype), 'constructor', this).apply(this, arguments);
 		}
-	});
+
+		_createClass(Speaker, [{
+			key: 'render',
+			value: function render() {
+				return _react2['default'].createElement(
+					'div',
+					null,
+					_react2['default'].createElement(
+						_partsDisplay2['default'],
+						{ 'if': this.props.status === 'connected' },
+						_react2['default'].createElement(
+							_partsDisplay2['default'],
+							{ 'if': this.props.member.name && this.props.member.type === 'speaker' },
+							_react2['default'].createElement(_partsQuestions2['default'], { questions: this.props.questions, emit: this.props.emit }),
+							_react2['default'].createElement(_partsAttendance2['default'], { audience: this.props.audience })
+						),
+						_react2['default'].createElement(
+							_partsDisplay2['default'],
+							{ 'if': !this.props.member.name },
+							_react2['default'].createElement(
+								'h2',
+								null,
+								'Start the presentation'
+							),
+							_react2['default'].createElement(_partsJoinSpeaker2['default'], { emit: this.props.emit })
+						)
+					)
+				);
+			}
+		}]);
+
+		return Speaker;
+	})(_react2['default'].Component);
 
 	module.exports = Speaker;
 
