@@ -55,8 +55,8 @@
 	var APP = __webpack_require__(196);
 	var Audience = __webpack_require__(250);
 	var Speaker = __webpack_require__(253);
-	var Board = __webpack_require__(256);
-	var Whoops404 = __webpack_require__(257);
+	var Board = __webpack_require__(257);
+	var Whoops404 = __webpack_require__(258);
 
 	var routes = React.createElement(
 		Route,
@@ -23581,7 +23581,9 @@
 	            title: '',
 	            member: {},
 	            audience: [],
-	            speaker: ''
+	            speaker: '',
+	            questions: [],
+	            currentQuestion: false
 	        };
 	    },
 
@@ -23594,6 +23596,7 @@
 	        this.socket.on('audience', this.updateAudience);
 	        this.socket.on('start', this.start);
 	        this.socket.on('end', this.updateState);
+	        this.socket.on('ask', this.ask);
 	    },
 
 	    emit: function emit(eventName, payload) {
@@ -23639,6 +23642,10 @@
 	            sessionStorage.title = presentation.title;
 	        }
 	        this.setState(presentation);
+	    },
+
+	    ask: function ask(question) {
+	        this.setState({ currentQuestion: question });
 	    },
 
 	    render: function render() {
@@ -30941,21 +30948,34 @@
 						Display,
 						{ 'if': this.props.member.name },
 						React.createElement(
-							'h2',
-							null,
-							'Welcome ',
-							this.props.member.name
+							Display,
+							{ 'if': !this.props.currentQuestion },
+							React.createElement(
+								'h2',
+								null,
+								'Welcome ',
+								this.props.member.name
+							),
+							React.createElement(
+								'p',
+								null,
+								this.props.audience.length,
+								' audience members connected'
+							),
+							React.createElement(
+								'p',
+								null,
+								'Questions will appear here.'
+							)
 						),
 						React.createElement(
-							'p',
-							null,
-							this.props.audience.length,
-							' audience members connected'
-						),
-						React.createElement(
-							'p',
-							null,
-							'Questions will appear here.'
+							Display,
+							{ 'if': this.props.currentQuestion },
+							React.createElement(
+								'h2',
+								null,
+								this.props.currentQuestion.q
+							)
 						)
 					),
 					React.createElement(
@@ -31054,6 +31074,7 @@
 	var Display = __webpack_require__(251);
 	var JoinSpeaker = __webpack_require__(254);
 	var Attendance = __webpack_require__(255);
+	var Questions = __webpack_require__(256);
 
 	var Speaker = React.createClass({
 		displayName: 'Speaker',
@@ -31068,11 +31089,7 @@
 					React.createElement(
 						Display,
 						{ 'if': this.props.member.name && this.props.member.type === 'speaker' },
-						React.createElement(
-							'p',
-							null,
-							'Questions'
-						),
+						React.createElement(Questions, { questions: this.props.questions, emit: this.props.emit }),
 						React.createElement(Attendance, { audience: this.props.audience })
 					),
 					React.createElement(
@@ -31222,6 +31239,49 @@
 
 	var React = __webpack_require__(1);
 
+	var Questions = React.createClass({
+		displayName: 'Questions',
+
+		ask: function ask(question) {
+			this.props.emit('ask', question);
+		},
+
+		addQuestion: function addQuestion(question, i) {
+			return React.createElement(
+				'div',
+				{ key: i, className: "col-xs-12 col-sm-6 col-md-3" },
+				React.createElement(
+					'span',
+					{ onClick: this.ask.bind(null, question) },
+					question.q
+				)
+			);
+		},
+
+		render: function render() {
+			return React.createElement(
+				'div',
+				{ id: "questions", className: "row" },
+				React.createElement(
+					'h2',
+					null,
+					'Questions'
+				),
+				this.props.questions.map(this.addQuestion)
+			);
+		}
+	});
+
+	module.exports = Questions;
+
+/***/ },
+/* 257 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
 	var Board = React.createClass({
 		displayName: 'Board',
 
@@ -31239,7 +31299,7 @@
 	module.exports = Board;
 
 /***/ },
-/* 257 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
