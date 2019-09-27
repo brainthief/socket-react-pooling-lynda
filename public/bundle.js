@@ -23580,7 +23580,8 @@
 	            status: 'disconnected',
 	            title: '',
 	            member: {},
-	            audience: []
+	            audience: [],
+	            speaker: ''
 	        };
 	    },
 
@@ -23588,9 +23589,10 @@
 	        this.socket = io('http://localhost:3000');
 	        this.socket.on('connect', this.connect);
 	        this.socket.on('disconnect', this.disconnect);
-	        this.socket.on('welcome', this.welcome);
+	        this.socket.on('welcome', this.updateState);
 	        this.socket.on('joined', this.joined);
 	        this.socket.on('audience', this.updateAudience);
+	        this.socket.on('start', this.updateState);
 	    },
 
 	    emit: function emit(eventName, payload) {
@@ -23612,8 +23614,8 @@
 	        this.setState({ status: 'disconnected' });
 	    },
 
-	    welcome: function welcome(serverState) {
-	        this.setState({ title: serverState.title });
+	    updateState: function updateState(serverState) {
+	        this.setState(serverState);
 	    },
 
 	    joined: function joined(member) {
@@ -23629,7 +23631,7 @@
 	        return React.createElement(
 	            'div',
 	            null,
-	            React.createElement(Header, { title: this.state.title, status: this.state.status }),
+	            React.createElement(Header, this.state),
 	            React.createElement(RouteHandler, _extends({ emit: this.emit }, this.state))
 	        );
 	    }
@@ -30882,6 +30884,11 @@
 						'h1',
 						null,
 						this.props.title
+					),
+					React.createElement(
+						'p',
+						null,
+						this.props.speaker
 					)
 				),
 				React.createElement(
